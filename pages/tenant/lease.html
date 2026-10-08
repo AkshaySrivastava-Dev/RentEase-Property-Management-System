@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Lease Agreement — RentEase</title>
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/globals.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/forms.css">
+  <link rel="stylesheet" href="../../css/tables.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <div id="navbar-container"></div>
+
+      <main class="main-content">
+        <div class="page-header">
+          <div class="page-header-info">
+            <h1 class="page-header-title">My Lease Agreement</h1>
+            <p class="page-header-desc">Review your current tenancy terms, rental rates, and lease schedule.</p>
+          </div>
+        </div>
+
+        <div id="tenant-lease-container">
+          <!-- Loaded via JS -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="../../js/utils/constants.js"></script>
+  <script src="../../js/utils/helpers.js"></script>
+  <script src="../../js/utils/formatters.js"></script>
+  <script src="../../js/utils/validators.js"></script>
+  <script src="../../js/storage/storage.js"></script>
+  <script src="../../js/data/seedData.js"></script>
+  <script src="../../js/services/authService.js"></script>
+  <script src="../../js/services/propertyService.js"></script>
+  <script src="../../js/services/tenantService.js"></script>
+  <script src="../../js/services/leaseService.js"></script>
+  <script src="../../js/services/paymentService.js"></script>
+  <script src="../../js/services/maintenanceService.js"></script>
+  <script src="../../js/services/messageService.js"></script>
+  <script src="../../js/components/sidebar.js"></script>
+  <script src="../../js/components/navbar.js"></script>
+  <script src="../../js/components/modal.js"></script>
+  <script src="../../js/components/toast.js"></script>
+  <script src="../../js/components/table.js"></script>
+  <script src="../../js/app.js"></script>
+  <script src="../../js/pages/tenant/lease.js"></script>
+</body>
+</html>

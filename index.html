@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RentEase — Modern Property Management Platform</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/tables.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    /* ==========================================================================
+       RentEase Customer-Facing Landing Page Styles
+       ========================================================================== */
+
+    body {
+      background-color: var(--color-background);
+      color: var(--color-text-primary);
+      overflow-x: hidden;
+    }
+
+    /* Navigation Bar */
+    .landing-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-4) var(--space-8);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: box-shadow var(--transition-fast);
+    }
+
+    .landing-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-link {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .nav-link:hover {
+      color: var(--color-primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    /* Active Session Bar */
+    #active-session-banner {
+      display: none;
+      background-color: var(--color-primary-light);
+      border-bottom: 1px solid rgba(37, 99, 235, 0.2);
+      padding: var(--space-2) var(--space-4);
+      text-align: center;
+      font-size: var(--font-size-xs);
+      color: var(--color-primary-dark);
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 5rem 1.5rem 4rem;
+      max-width: 1120px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-headline {
+      font-size: clamp(2.25rem, 5vw, 3.75rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--color-text-primary);
+      margin-bottom: 1.25rem;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-headline span {
+      color: var(--color-primary);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2vw, 1.25rem);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta-group .btn {
+      padding: 0.75rem 1.75rem;
+      font-size: var(--font-size-base);
+      border-radius: var(--radius-md);
+      font-weight: var(--font-weight-semibold);
+    }
+
+
+    /* Section General */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-subtitle {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Product Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .feature-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary-light);
+    }
+
+    .feature-icon-wrapper {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    .feature-icon-wrapper svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .feature-title {
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Two-Sided Value Section */
+    .value-section-wrapper {
+      background-color: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: var(--space-8);
+    }
+
+    .value-card {
+      background-color: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .value-card-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .value-badge {
+      display: inline-block;
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: 0.75rem;
+    }
+
+    .value-badge-manager {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    .value-badge-resident {
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+    }
+
+    .value-card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+
+    .value-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .value-list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: var(--font-size-base);
+      color: var(--color-text-primary);
+      line-height: 1.5;
+    }
+
+    .value-check-icon {
+      color: var(--color-primary);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .value-card-resident .value-check-icon {
+      color: var(--color-success);
+    }
+
+    .value-card-action {
+      margin-top: auto;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 6rem 1.5rem;
+      text-align: center;
+      background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+      color: #ffffff;
+    }
+
+    .cta-container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .cta-headline {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    .cta-subtext {
+      font-size: var(--font-size-lg);
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .cta-btn {
+      background-color: #ffffff;
+      color: var(--color-primary);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      padding: 0.875rem 2.25rem;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      transition: background-color var(--transition-fast), transform var(--transition-fast);
+      border: none;
+      box-shadow: var(--shadow-md);
+    }
+
+    .cta-btn:hover {
+      background-color: #f8fafc;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: #0f172a;
+      color: #94a3b8;
+      padding: 4.5rem 1.5rem 2.5rem;
+      border-top: 1px solid #1e293b;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 3rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .footer-brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-tagline {
+      font-size: var(--font-size-sm);
+      color: #94a3b8;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+
+    .footer-col-title {
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: var(--font-size-sm);
+      transition: color var(--transition-fast);
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: var(--font-size-xs);
+      color: #64748b;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Mobile Responsive Adjustments */
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .landing-header {
+        padding: var(--space-3) var(--space-4);
+      }
+
+      .landing-nav .nav-links {
+        display: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="landing-header">
+    <a href="index.html" class="brand-logo" aria-label="RentEase Home">
+      <div class="brand-logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </div>
+      <span class="brand-logo-text">RentEase</span>
+    </a>
+
+    <nav class="landing-nav" aria-label="Main Navigation">
+      <ul class="nav-links">
+        <li><a href="#" class="nav-link">Home</a></li>
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+      </ul>
+
+      <div class="nav-actions" id="guest-nav-links">
+        <a href="pages/login.html" class="btn btn-secondary btn-sm">Sign In</a>
+        <a href="pages/signup.html" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Active Session Indicator (Dynamic, shown when session exists) -->
+  <div id="active-session-banner">
+    <span>Active session: <strong id="active-user-name">User</strong></span>
+    <span>•</span>
+    <a href="#" id="active-dashboard-link" style="font-weight: 600; text-decoration: underline; color: inherit;">Open Dashboard &rarr;</a>
+    <span>•</span>
+    <button type="button" id="btn-quick-logout" style="background:none; border:none; color:inherit; text-decoration:underline; cursor:pointer; font-size:inherit;">Sign Out</button>
+  </div>
+
+  <main>
+    <!-- 2. HERO SECTION -->
+    <section class="hero-section">
+      <h1 class="hero-headline">
+        Manage Your Property. Simplify Your Rental Experience.
+      </h1>
+      <p class="hero-subtitle">
+        Everything you need to manage properties, tenants, rent and maintenance in one simple platform.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="pages/signup.html" class="btn btn-primary">Get Started</a>
+        <a href="pages/login.html" class="btn btn-secondary">Sign In</a>
+      </div>
+
+    </section>
+
+    <!-- 3. PRODUCT FEATURES -->
+    <section class="section-container" id="features">
+      <div class="section-header">
+        <h2 class="section-title">Product Features</h2>
+        <p class="section-subtitle">
+          Intelligent tools crafted to give landlords, property managers, and residents full visibility and control.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1: Property Management -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </div>
+          <h3 class="feature-title">Property Management</h3>
+          <p class="feature-desc">
+            Organize your complete rental portfolio, update vacancy statuses, and manage unit specifications with photos and amenities.
+          </p>
+        </div>
+
+        <!-- Feature 2: Tenant Management -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h3 class="feature-title">Tenant Management</h3>
+          <p class="feature-desc">
+            Maintain complete resident profiles, contact directories, and active unit assignments with zero hassle.
+          </p>
+        </div>
+
+        <!-- Feature 3: Rent & Payments -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <line x1="2" y1="10" x2="22" y2="10"></line>
+            </svg>
+          </div>
+          <h3 class="feature-title">Rent &amp; Payments</h3>
+          <p class="feature-desc">
+            Track rent collections with transparent ledgers, monitor overdue notices, and record payments promptly.
+          </p>
+        </div>
+
+        <!-- Feature 4: Lease Management -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+          </div>
+          <h3 class="feature-title">Lease Management</h3>
+          <p class="feature-desc">
+            Create and oversee residential lease agreements with clear start dates, terms, and security deposit records.
+          </p>
+        </div>
+
+        <!-- Feature 5: Maintenance Requests -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
+          </div>
+          <h3 class="feature-title">Maintenance Requests</h3>
+          <p class="feature-desc">
+            Streamline service requests with priority tagging, status tracking from open to resolved, and timely resolution.
+          </p>
+        </div>
+
+        <!-- Feature 6: Direct Messaging -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="feature-title">Direct Messaging</h3>
+          <p class="feature-desc">
+            Keep communications clear with built-in direct messaging between managers and residents for rapid questions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TWO-SIDED VALUE SECTION -->
+    <section class="value-section-wrapper" id="about">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Built for Modern Rental Communities</h2>
+          <p class="section-subtitle">
+            A tailored experience built for both rental operators and residents.
+          </p>
+        </div>
+
+        <div class="value-grid">
+          <!-- Property Managers Card -->
+          <div class="value-card">
+            <div class="value-card-header">
+              <span class="value-badge value-badge-manager">Property Managers</span>
+              <h3 class="value-card-title">Property Managers</h3>
+            </div>
+
+            <ul class="value-list">
+              <li class="value-list-item">
+                <svg class="value-check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Manage your properties</span>
+              </li>
+              <li class="value-list-item">
+                <svg class="value-check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Track tenants and leases</span>
+              </li>
+              <li class="value-list-item">
+                <svg class="value-check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Monitor rent and payments</span>
+              </li>
+              <li class="value-list-item">
+                <svg class="value-check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Handle maintenance requests</span>
+              </li>
+            </ul>
+
+            <div class="value-card-action">
+              <a href="pages/login.html" class="btn btn-primary" style="width: 100%;">Manager Portal &rarr;</a>
+            </div>
+          </div>
+
+          <!-- Residents Card -->
+          <div class="value-card value-card-resident">
+            <div class="value-card-header">
+              <span class="value-badge value-badge-resident">Residents</span>
+              <h3 class="value-card-title">Residents</h3>
+            </div>
+
+            <ul class="value-list">
+              <li class="value-list-item">
+                <svg class="value-check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>View your property information</span>
+              </li>
+              <li class="value-list-item">
+                <svg class="value-check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Access lease details</span>
+              </li>
+              <li class="value-list-item">
+                <svg class="value-check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Track payments</span>
+              </li>
+              <li class="value-list-item">
+                <svg class="value-check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Submit maintenance requests</span>
+              </li>
+              <li class="value-list-item">
+                <svg class="value-check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Contact property management</span>
+              </li>
+            </ul>
+
+            <div class="value-card-action">
+              <a href="pages/login.html" class="btn btn-secondary" style="width: 100%;">Resident Portal &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. CTA SECTION -->
+    <section class="cta-section">
+      <div class="cta-container">
+        <h2 class="cta-headline">Ready to simplify property management?</h2>
+        <p class="cta-subtext">
+          Join property managers and residents who enjoy effortless rental operations every day.
+        </p>
+        <a href="pages/signup.html" class="cta-btn">Get Started &rarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- 6. FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div>
+          <div class="footer-brand-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            RentEase
+          </div>
+          <p class="footer-tagline">
+            Simple property management for modern rentals.
+          </p>
+        </div>
+
+        <!-- Product Column -->
+        <div>
+          <div class="footer-col-title">Product</div>
+          <ul class="footer-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="pages/login.html">Properties</a></li>
+            <li><a href="pages/login.html">Payments</a></li>
+            <li><a href="pages/login.html">Maintenance</a></li>
+          </ul>
+        </div>
+
+        <!-- Company Column -->
+        <div>
+          <div class="footer-col-title">Company</div>
+          <ul class="footer-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="mailto:support@rentease.example">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Support Column -->
+        <div>
+          <div class="footer-col-title">Support</div>
+          <ul class="footer-links">
+            <li><a href="#features">Help Center</a></li>
+            <li><a href="mailto:support@rentease.example">Contact Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 RentEase. All rights reserved.</div>
+        <div>Simple property management for modern rentals.</div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/utils/constants.js"></script>
+  <script src="js/utils/helpers.js"></script>
+  <script src="js/utils/formatters.js"></script>
+  <script src="js/utils/validators.js"></script>
+  <script src="js/storage/storage.js"></script>
+  <script src="js/data/seedData.js"></script>
+  <script src="js/services/authService.js"></script>
+  <script src="js/components/toast.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Ensure seed data is initialized
+      if (typeof SeedData !== 'undefined' && SeedData.init) {
+        SeedData.init();
+      } else if (window.RentEase && window.RentEase.seedData && window.RentEase.seedData.initSeedData) {
+        window.RentEase.seedData.initSeedData();
+      }
+
+      const auth = (window.RentEase && window.RentEase.authService) || (typeof AuthService !== 'undefined' ? AuthService : null);
+      const toast = (window.RentEase && window.RentEase.toast) || (typeof Toast !== 'undefined' ? Toast : { success: alert, error: alert });
+
+      // 2. Active Session Detection
+      const currentUser = auth ? auth.getCurrentUser() : null;
+      const sessionBanner = document.getElementById('active-session-banner');
+      const activeUserName = document.getElementById('active-user-name');
+      const activeDashboardLink = document.getElementById('active-dashboard-link');
+
+      if (currentUser && sessionBanner) {
+        sessionBanner.style.display = 'flex';
+        if (activeUserName) {
+          activeUserName.textContent = `${currentUser.name} (${currentUser.role === 'admin' ? 'Manager' : 'Resident'})`;
+        }
+        if (activeDashboardLink) {
+          activeDashboardLink.href = currentUser.role === 'admin' ? 'pages/admin/dashboard.html' : 'pages/tenant/dashboard.html';
+        }
+
+        document.getElementById('btn-quick-logout')?.addEventListener('click', () => {
+          if (auth) auth.logout();
+          window.location.reload();
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Leases — RentEase</title>
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/globals.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/forms.css">
+  <link rel="stylesheet" href="../../css/tables.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <div id="navbar-container"></div>
+
+      <main class="main-content">
+        <div class="page-header">
+          <div class="page-header-info">
+            <h1 class="page-header-title">Lease Agreements</h1>
+            <p class="page-header-desc">Track active tenancy agreements, durations, security deposits, and renewals.</p>
+          </div>
+          <div class="page-header-actions">
+            <button type="button" class="btn btn-primary" id="btn-create-lease">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Create New Lease</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="lease-search-input" class="form-control" placeholder="Search by tenant name or property title...">
+          </div>
+
+          <div class="filter-group">
+            <select id="filter-lease-status" class="form-control" style="width: auto; min-width: 140px;">
+              <option value="All">All Leases</option>
+              <option value="Active">Active</option>
+              <option value="Upcoming">Upcoming</option>
+              <option value="Expired">Expired</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Leases Table Card -->
+        <div class="card">
+          <div class="card-body" style="padding: 0;">
+            <div id="leases-table-container"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Create New Lease Modal -->
+  <div class="modal" id="lease-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="lease-modal-title">Create New Lease Agreement</h2>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close modal">&times;</button>
+        </div>
+        <form id="lease-form" novalidate>
+          <div class="modal-body">
+            <div id="lease-error-alert" style="display: none; background: var(--color-danger-light); color: var(--color-danger-text); padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.875rem; margin-bottom: var(--space-4); border: 1px solid rgba(220, 38, 38, 0.2);"></div>
+
+            <div class="form-group">
+              <label for="lease-property-id" class="form-label required">Select Property</label>
+              <select id="lease-property-id" class="form-control" required>
+                <!-- Populated via JS -->
+              </select>
+              <div id="lease-property-info" style="font-size: 0.8rem; color: var(--color-text-secondary); margin-top: 4px;"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="lease-tenant-id" class="form-label required">Select Resident / Tenant</label>
+              <select id="lease-tenant-id" class="form-control" required>
+                <!-- Populated via JS -->
+              </select>
+            </div>
+
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+              <div class="form-group">
+                <label for="lease-start-date" class="form-label required">Start Date</label>
+                <input type="date" id="lease-start-date" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="lease-end-date" class="form-label required">End Date</label>
+                <input type="date" id="lease-end-date" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+              <div class="form-group">
+                <label for="lease-monthly-rent" class="form-label required">Monthly Rent (₹)</label>
+                <input type="number" id="lease-monthly-rent" class="form-control" placeholder="e.g. 25000" min="1" step="1" required>
+              </div>
+              <div class="form-group">
+                <label for="lease-deposit" class="form-label required">Security Deposit (₹)</label>
+                <input type="number" id="lease-deposit" class="form-control" placeholder="e.g. 50000" min="0" step="1" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="lease-status" class="form-label required">Lease Agreement Status</label>
+              <select id="lease-status" class="form-control" required>
+                <option value="Active" selected>Active</option>
+                <option value="Upcoming">Upcoming</option>
+                <option value="Expired">Expired</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-lease">Create Lease Agreement</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="../../js/utils/constants.js"></script>
+  <script src="../../js/utils/helpers.js"></script>
+  <script src="../../js/utils/formatters.js"></script>
+  <script src="../../js/utils/validators.js"></script>
+  <script src="../../js/storage/storage.js"></script>
+  <script src="../../js/data/seedData.js"></script>
+  <script src="../../js/services/authService.js"></script>
+  <script src="../../js/services/propertyService.js"></script>
+  <script src="../../js/services/tenantService.js"></script>
+  <script src="../../js/services/leaseService.js"></script>
+  <script src="../../js/services/paymentService.js"></script>
+  <script src="../../js/services/maintenanceService.js"></script>
+  <script src="../../js/services/messageService.js"></script>
+  <script src="../../js/components/sidebar.js"></script>
+  <script src="../../js/components/navbar.js"></script>
+  <script src="../../js/components/modal.js"></script>
+  <script src="../../js/components/toast.js"></script>
+  <script src="../../js/components/table.js"></script>
+  <script src="../../js/app.js"></script>
+  <script src="../../js/pages/admin/leases.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages — RentEase</title>
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/globals.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/forms.css">
+  <link rel="stylesheet" href="../../css/tables.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <div id="navbar-container"></div>
+
+      <main class="main-content" style="padding-bottom: var(--space-6);">
+        <div class="page-header" style="margin-bottom: var(--space-4);">
+          <div class="page-header-info">
+            <h1 class="page-header-title">Manager Communication</h1>
+            <p class="page-header-desc">Chat directly with property management regarding maintenance, rent, or lease notices.</p>
+          </div>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+          <!-- Sidebar: Management Contacts -->
+          <div class="chat-sidebar">
+            <div class="chat-sidebar-header flex items-center justify-between">
+              <span>Management Contacts</span>
+              <span id="tenant-unread-badge" class="badge badge-info" style="display: none;">0 new</span>
+            </div>
+            <div class="chat-conversations-list" id="tenant-conversations-list">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Main Chat Area -->
+          <div class="chat-main">
+            <div class="chat-main-header">
+              <div class="table-user-cell" id="tenant-active-chat-header">
+                <span class="text-sm text-muted">Select manager contact</span>
+              </div>
+            </div>
+
+            <div class="chat-messages-area" id="tenant-messages-container">
+              <!-- Messages -->
+            </div>
+
+            <form class="chat-input-area" id="tenant-send-form">
+              <input type="text" id="tenant-message-input" class="form-control" placeholder="Write message to property manager..." autocomplete="off" required>
+              <button type="submit" class="btn btn-primary" id="btn-tenant-send">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                <span>Send</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="../../js/utils/constants.js"></script>
+  <script src="../../js/utils/helpers.js"></script>
+  <script src="../../js/utils/formatters.js"></script>
+  <script src="../../js/utils/validators.js"></script>
+  <script src="../../js/storage/storage.js"></script>
+  <script src="../../js/data/seedData.js"></script>
+  <script src="../../js/services/authService.js"></script>
+  <script src="../../js/services/propertyService.js"></script>
+  <script src="../../js/services/tenantService.js"></script>
+  <script src="../../js/services/leaseService.js"></script>
+  <script src="../../js/services/paymentService.js"></script>
+  <script src="../../js/services/maintenanceService.js"></script>
+  <script src="../../js/services/messageService.js"></script>
+  <script src="../../js/components/sidebar.js"></script>
+  <script src="../../js/components/navbar.js"></script>
+  <script src="../../js/components/modal.js"></script>
+  <script src="../../js/components/toast.js"></script>
+  <script src="../../js/components/table.js"></script>
+  <script src="../../js/app.js"></script>
+  <script src="../../js/pages/tenant/messages.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance Requests — RentEase</title>
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/globals.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/forms.css">
+  <link rel="stylesheet" href="../../css/tables.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <div id="navbar-container"></div>
+
+      <main class="main-content">
+        <div class="page-header">
+          <div class="page-header-info">
+            <h1 class="page-header-title">Maintenance & Repairs</h1>
+            <p class="page-header-desc">Report apartment issues, track repair progression, and review ticket history.</p>
+          </div>
+          <div class="page-header-actions">
+            <button type="button" class="btn btn-primary" id="btn-new-ticket">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Submit New Ticket</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="tenant-maint-search" class="form-control" placeholder="Search my tickets...">
+          </div>
+
+          <div class="filter-group">
+            <select id="filter-tenant-maint-status" class="form-control" style="width: auto; min-width: 140px;">
+              <option value="All">All Statuses</option>
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Tickets Table -->
+        <div class="card">
+          <div class="card-body" style="padding: 0;">
+            <div id="tenant-tickets-table-container"></div>
+            <div id="tenant-maintenance-table"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- New Maintenance Request Modal -->
+  <div class="modal" id="maintenance-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="maintenance-modal-title">New Maintenance Request</h2>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close modal">&times;</button>
+        </div>
+        <form id="maintenance-form" novalidate>
+          <div class="modal-body">
+            <div id="maint-error-alert" style="display: none; background: var(--color-danger-light); color: var(--color-danger-text); padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.875rem; margin-bottom: var(--space-4); border: 1px solid rgba(220, 38, 38, 0.2);"></div>
+
+            <div class="form-group">
+              <label for="maint-property-title" class="form-label">Rental Property</label>
+              <input type="text" id="maint-property-title" class="form-control" readonly disabled value="Loading assigned unit...">
+              <input type="hidden" id="maint-property-id">
+            </div>
+
+            <div class="form-group">
+              <label for="maint-title" class="form-label required">Issue Title</label>
+              <input type="text" id="maint-title" class="form-control" placeholder="e.g. Leaking Kitchen Tap" required>
+            </div>
+
+            <div class="form-group">
+              <label for="maint-priority" class="form-label required">Priority Level</label>
+              <select id="maint-priority" class="form-control" required>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High" selected>High</option>
+                <option value="Urgent">Urgent</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="maint-description" class="form-label required">Description</label>
+              <textarea id="maint-description" class="form-control" rows="4" placeholder="The kitchen tap is leaking continuously and needs repair." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-maint">Submit Request</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="../../js/utils/constants.js"></script>
+  <script src="../../js/utils/helpers.js"></script>
+  <script src="../../js/utils/formatters.js"></script>
+  <script src="../../js/utils/validators.js"></script>
+  <script src="../../js/storage/storage.js"></script>
+  <script src="../../js/data/seedData.js"></script>
+  <script src="../../js/services/authService.js"></script>
+  <script src="../../js/services/propertyService.js"></script>
+  <script src="../../js/services/tenantService.js"></script>
+  <script src="../../js/services/leaseService.js"></script>
+  <script src="../../js/services/paymentService.js"></script>
+  <script src="../../js/services/maintenanceService.js"></script>
+  <script src="../../js/services/messageService.js"></script>
+  <script src="../../js/components/sidebar.js"></script>
+  <script src="../../js/components/navbar.js"></script>
+  <script src="../../js/components/modal.js"></script>
+  <script src="../../js/components/toast.js"></script>
+  <script src="../../js/components/table.js"></script>
+  <script src="../../js/app.js"></script>
+  <script src="../../js/pages/tenant/maintenance.js"></script>
+</body>
+</html>

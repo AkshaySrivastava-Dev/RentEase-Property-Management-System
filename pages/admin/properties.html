@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Properties — RentEase</title>
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/globals.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/forms.css">
+  <link rel="stylesheet" href="../../css/tables.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <div id="navbar-container"></div>
+
+      <main class="main-content">
+        <div class="page-header">
+          <div class="page-header-info">
+            <h1 class="page-header-title">Properties</h1>
+            <p class="page-header-desc">Manage, list, and monitor your residential and commercial units.</p>
+          </div>
+          <div class="page-header-actions">
+            <button type="button" class="btn btn-primary" id="btn-add-property">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Add Property</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter and Search Bar -->
+        <div class="filter-bar">
+          <div class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="property-search-input" class="form-control" placeholder="Search by title, address, city...">
+          </div>
+
+          <div class="filter-group">
+            <select id="filter-property-status" class="form-control" style="width: auto; min-width: 140px;">
+              <option value="All">All Statuses</option>
+              <option value="Available">Available</option>
+              <option value="Occupied">Occupied</option>
+              <option value="Maintenance">Maintenance</option>
+            </select>
+
+            <select id="filter-property-type" class="form-control" style="width: auto; min-width: 140px;">
+              <option value="All">All Types</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Villa">Villa</option>
+              <option value="Independent House">Independent House</option>
+              <option value="Studio">Studio</option>
+              <option value="Commercial">Commercial</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Properties Grid Display -->
+        <div id="properties-grid-container" class="properties-grid">
+          <!-- Loaded via JS -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add / Edit Property Modal -->
+  <div class="modal" id="property-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="property-modal-title">Add New Property</h2>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close modal">&times;</button>
+        </div>
+        <form id="property-form" novalidate>
+          <input type="hidden" id="prop-id">
+          <div class="modal-body">
+            <div id="prop-error-alert" style="display: none; background: var(--color-danger-light); color: var(--color-danger-text); padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.875rem; margin-bottom: var(--space-4); border: 1px solid rgba(220, 38, 38, 0.2);"></div>
+
+            <div class="form-group">
+              <label for="prop-title" class="form-label required">Property Title</label>
+              <input type="text" id="prop-title" class="form-control" placeholder="e.g. Sunset Luxury Heights, Unit 4B" required>
+            </div>
+
+            <div class="form-row" style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-3);">
+              <div class="form-group">
+                <label for="prop-address" class="form-label required">Street Address</label>
+                <input type="text" id="prop-address" class="form-control" placeholder="e.g. 104 Ocean Drive" required>
+              </div>
+              <div class="form-group">
+                <label for="prop-city" class="form-label required">City</label>
+                <input type="text" id="prop-city" class="form-control" placeholder="e.g. Mumbai" required>
+              </div>
+            </div>
+
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+              <div class="form-group">
+                <label for="prop-type" class="form-label required">Property Type</label>
+                <select id="prop-type" class="form-control" required>
+                  <option value="Apartment" selected>Apartment</option>
+                  <option value="Townhouse">Townhouse</option>
+                  <option value="Condo">Condo</option>
+                  <option value="Single Family">Single Family</option>
+                  <option value="Studio">Studio</option>
+                  <option value="Villa">Villa</option>
+                  <option value="Commercial">Commercial</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="prop-rent" class="form-label required">Monthly Rent (₹)</label>
+                <input type="number" id="prop-rent" class="form-control" placeholder="e.g. 35000" min="1" step="1" required>
+              </div>
+            </div>
+
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-3);">
+              <div class="form-group">
+                <label for="prop-beds" class="form-label required">Bedrooms</label>
+                <input type="number" id="prop-beds" class="form-control" value="2" min="0" step="1" required>
+              </div>
+              <div class="form-group">
+                <label for="prop-baths" class="form-label required">Bathrooms</label>
+                <input type="number" id="prop-baths" class="form-control" value="2" min="1" step="1" required>
+              </div>
+              <div class="form-group">
+                <label for="prop-status" class="form-label required">Status</label>
+                <select id="prop-status" class="form-control" required>
+                  <option value="Available" selected>Available</option>
+                  <option value="Occupied">Occupied</option>
+                  <option value="Maintenance">Maintenance</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="prop-amenities" class="form-label">Amenities (comma-separated)</label>
+              <input type="text" id="prop-amenities" class="form-control" placeholder="e.g. Swimming Pool, Gym, Covered Parking, Security">
+            </div>
+
+            <div class="form-group">
+              <label for="prop-image" class="form-label">Image URL</label>
+              <input type="url" id="prop-image" class="form-control" placeholder="https://images.unsplash.com/... (optional)">
+              <span class="form-hint" style="font-size: 0.75rem; color: var(--color-text-secondary); margin-top: 4px; display: block;">Leave empty to use a curated property image automatically.</span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-property">Add Property</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="../../js/utils/constants.js"></script>
+  <script src="../../js/utils/helpers.js"></script>
+  <script src="../../js/utils/formatters.js"></script>
+  <script src="../../js/utils/validators.js"></script>
+  <script src="../../js/storage/storage.js"></script>
+  <script src="../../js/data/seedData.js"></script>
+  <script src="../../js/services/authService.js"></script>
+  <script src="../../js/services/propertyService.js"></script>
+  <script src="../../js/services/tenantService.js"></script>
+  <script src="../../js/services/leaseService.js"></script>
+  <script src="../../js/services/paymentService.js"></script>
+  <script src="../../js/services/maintenanceService.js"></script>
+  <script src="../../js/services/messageService.js"></script>
+  <script src="../../js/components/sidebar.js"></script>
+  <script src="../../js/components/navbar.js"></script>
+  <script src="../../js/components/modal.js"></script>
+  <script src="../../js/components/toast.js"></script>
+  <script src="../../js/components/table.js"></script>
+  <script src="../../js/app.js"></script>
+  <script src="../../js/pages/admin/properties.js"></script>
+</body>
+</html>

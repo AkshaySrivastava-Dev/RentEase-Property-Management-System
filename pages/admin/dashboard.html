@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — RentEase</title>
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/globals.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/forms.css">
+  <link rel="stylesheet" href="../../css/tables.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar Mount -->
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <!-- Navbar Mount -->
+      <div id="navbar-container"></div>
+
+      <main class="main-content">
+        <div class="page-header">
+          <div class="page-header-info">
+            <h1 class="page-header-title" id="welcome-heading">Welcome Back</h1>
+            <p class="page-header-desc">Here is the latest snapshot of your property portfolio and operations.</p>
+          </div>
+          <div class="page-header-actions">
+            <a href="properties.html?action=new" class="btn btn-primary" id="btn-quick-add-prop">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Add Property</span>
+            </a>
+            <a href="leases.html?action=new" class="btn btn-secondary">
+              <span>Create Lease</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Dynamic Metric Cards Grid -->
+        <div class="metrics-grid" id="dashboard-metrics">
+          <!-- Metric 1: Total Properties -->
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Total Units</span>
+              <span class="metric-value" id="stat-total-props">0</span>
+              <span class="metric-subtext" id="stat-prop-breakdown">0 available • 0 occupied</span>
+            </div>
+            <div class="metric-icon-box metric-icon-blue">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </div>
+          </div>
+
+          <!-- Metric 2: Occupancy Rate -->
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Occupied Units</span>
+              <span class="metric-value" id="stat-occupied-props">0</span>
+              <span class="metric-subtext" id="stat-occupancy-rate">0% occupancy rate</span>
+            </div>
+            <div class="metric-icon-box metric-icon-green">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+            </div>
+          </div>
+
+          <!-- Metric 3: Total Tenants -->
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Active Tenants</span>
+              <span class="metric-value" id="stat-total-tenants">0</span>
+              <span class="metric-subtext">Registered residents</span>
+            </div>
+            <div class="metric-icon-box metric-icon-sky">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+          </div>
+
+          <!-- Metric 4: Pending / Overdue Rent -->
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Pending Payments</span>
+              <span class="metric-value" id="stat-pending-payments">0</span>
+              <span class="metric-subtext" id="stat-pending-amount">₹0 awaiting collection</span>
+            </div>
+            <div class="metric-icon-box metric-icon-amber">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+          </div>
+
+          <!-- Metric 5: Active Maintenance -->
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Open Maintenance</span>
+              <span class="metric-value" id="stat-open-maintenance">0</span>
+              <span class="metric-subtext" id="stat-maintenance-subtext">0 in progress</span>
+            </div>
+            <div class="metric-icon-box metric-icon-red">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-Column Main Dashboard Layout -->
+        <div class="dashboard-sections-grid">
+          <!-- Left Column: Recent Payments -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Recent Rental Payments</h3>
+              <a href="payments.html" class="text-sm font-semibold text-primary">View All &rarr;</a>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <div id="recent-payments-table-container"></div>
+            </div>
+          </div>
+
+          <!-- Right Column: Urgent / Open Maintenance -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Maintenance Requests</h3>
+              <a href="maintenance.html" class="text-sm font-semibold text-primary">View All &rarr;</a>
+            </div>
+            <div class="card-body" id="maintenance-summary-container" style="padding: var(--space-4);">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Occupancy & Properties Quick Glance -->
+        <div class="card" style="margin-top: var(--space-6);">
+          <div class="card-header">
+            <h3 class="card-title">Featured Properties Overview</h3>
+            <a href="properties.html" class="text-sm font-semibold text-primary">All Properties &rarr;</a>
+          </div>
+          <div class="card-body">
+            <div class="properties-grid" id="dashboard-properties-preview">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="../../js/utils/constants.js"></script>
+  <script src="../../js/utils/helpers.js"></script>
+  <script src="../../js/utils/formatters.js"></script>
+  <script src="../../js/utils/validators.js"></script>
+  <script src="../../js/storage/storage.js"></script>
+  <script src="../../js/data/seedData.js"></script>
+  <script src="../../js/services/authService.js"></script>
+  <script src="../../js/services/propertyService.js"></script>
+  <script src="../../js/services/tenantService.js"></script>
+  <script src="../../js/services/leaseService.js"></script>
+  <script src="../../js/services/paymentService.js"></script>
+  <script src="../../js/services/maintenanceService.js"></script>
+  <script src="../../js/services/messageService.js"></script>
+  <script src="../../js/components/sidebar.js"></script>
+  <script src="../../js/components/navbar.js"></script>
+  <script src="../../js/components/modal.js"></script>
+  <script src="../../js/components/toast.js"></script>
+  <script src="../../js/components/table.js"></script>
+  <script src="../../js/app.js"></script>
+  <script src="../../js/pages/admin/dashboard.js"></script>
+</body>
+</html>

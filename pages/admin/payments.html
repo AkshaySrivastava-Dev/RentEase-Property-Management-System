@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rental Payments Tracking — RentEase</title>
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/globals.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/forms.css">
+  <link rel="stylesheet" href="../../css/tables.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <div id="navbar-container"></div>
+
+      <main class="main-content">
+        <div class="page-header">
+          <div class="page-header-info">
+            <h1 class="page-header-title">Rental Payments</h1>
+            <p class="page-header-desc">Track and reconcile monthly rent dues, invoices, and collected payments.</p>
+          </div>
+          <div class="page-header-actions">
+            <button type="button" class="btn btn-primary" id="btn-record-payment">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Record Payment Invoice</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Payments Summary KPI Cards -->
+        <div class="metrics-grid" style="margin-bottom: var(--space-6);">
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Total Collected</span>
+              <span class="metric-value text-success" id="pay-kpi-collected">₹0</span>
+              <span class="metric-subtext" id="pay-kpi-collected-sub">0 payments marked paid</span>
+            </div>
+            <div class="metric-icon-box metric-icon-green">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Pending Collection</span>
+              <span class="metric-value text-warning" id="pay-kpi-pending">₹0</span>
+              <span class="metric-subtext" id="pay-kpi-pending-sub">0 pending invoices</span>
+            </div>
+            <div class="metric-icon-box metric-icon-amber">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Overdue Invoices</span>
+              <span class="metric-value text-danger" id="pay-kpi-overdue">0</span>
+              <span class="metric-subtext">Immediate follow-up required</span>
+            </div>
+            <div class="metric-icon-box metric-icon-red">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="payment-search-input" class="form-control" placeholder="Search by tenant or property name...">
+          </div>
+
+          <div class="filter-group">
+            <select id="filter-payment-status" class="form-control" style="width: auto; min-width: 140px;">
+              <option value="All">All Invoices</option>
+              <option value="Paid">Paid</option>
+              <option value="Pending">Pending</option>
+              <option value="Overdue">Overdue</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Payments Table -->
+        <div class="card">
+          <div class="card-body" style="padding: 0;">
+            <div id="payments-table-container"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Record Payment Modal -->
+  <div class="modal" id="payment-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Record Payment Invoice</h2>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close modal">&times;</button>
+        </div>
+        <form id="payment-form" novalidate>
+          <div class="modal-body">
+            <div id="payment-error-alert" style="display: none; background: var(--color-danger-light); color: var(--color-danger-text); padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.875rem; margin-bottom: var(--space-4); border: 1px solid rgba(220, 38, 38, 0.2);"></div>
+
+            <div class="form-group">
+              <label for="payment-lease-id" class="form-label required">Select Active Tenancy</label>
+              <select id="payment-lease-id" class="form-control" required>
+                <!-- Populated via JS -->
+              </select>
+            </div>
+
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+              <div class="form-group">
+                <label for="payment-amount" class="form-label required">Invoice Amount (₹)</label>
+                <input type="number" id="payment-amount" class="form-control" placeholder="e.g. 25000" min="1" step="1" required>
+              </div>
+              <div class="form-group">
+                <label for="payment-status" class="form-label required">Payment Status</label>
+                <select id="payment-status" class="form-control" required>
+                  <option value="Pending" selected>Pending</option>
+                  <option value="Paid">Paid</option>
+                  <option value="Overdue">Overdue</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="payment-due-date" class="form-label required">Due Date</label>
+              <input type="date" id="payment-due-date" class="form-control" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-payment">Record Invoice</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="../../js/utils/constants.js"></script>
+  <script src="../../js/utils/helpers.js"></script>
+  <script src="../../js/utils/formatters.js"></script>
+  <script src="../../js/utils/validators.js"></script>
+  <script src="../../js/storage/storage.js"></script>
+  <script src="../../js/data/seedData.js"></script>
+  <script src="../../js/services/authService.js"></script>
+  <script src="../../js/services/propertyService.js"></script>
+  <script src="../../js/services/tenantService.js"></script>
+  <script src="../../js/services/leaseService.js"></script>
+  <script src="../../js/services/paymentService.js"></script>
+  <script src="../../js/services/maintenanceService.js"></script>
+  <script src="../../js/services/messageService.js"></script>
+  <script src="../../js/components/sidebar.js"></script>
+  <script src="../../js/components/navbar.js"></script>
+  <script src="../../js/components/modal.js"></script>
+  <script src="../../js/components/toast.js"></script>
+  <script src="../../js/components/table.js"></script>
+  <script src="../../js/app.js"></script>
+  <script src="../../js/pages/admin/payments.js"></script>
+</body>
+</html>
